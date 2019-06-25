@@ -15,7 +15,7 @@ Route::get('/', 'WebController@index');
 
 Route::get('/saludar/{name}', 'WebController@sayHello');
 
-// Route::get('/movies', 'MoviesController');
+// Route::resource('/movies', 'MoviesController');
 
 Route::get('/admin', function () {
 	return view('back.index');
