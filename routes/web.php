@@ -1,5 +1,8 @@
 <?php
 
+use App\Movie;
+use App\Actor;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,3 +26,21 @@ Route::get('/admin', function () {
 
 Route::get('/movies/detail/{id}', 'MoviesController@searchById');
 Route::get('/movies/find/{name}', 'MoviesController@findMovieByName');
+
+Route::get('/movies', function () {
+	$result = Movie::all();
+	dd($result);
+});
+
+// Route::get('/actors', function () {
+// 	$actors = Actor::all();
+//
+// 	foreach ($actors as $oneActor) {
+// 		echo $oneActor->getFullName() . '<br>';
+// 	}
+// });
+
+Route::get('/actors', 'ActorsController@index');
+Route::get('/actors/{id}', 'ActorsController@show');
+
+// Si queremos un Controller con la plantilla de todos los métodos más comunes hacemos: php artisan make:controller EntitiesController --resource
