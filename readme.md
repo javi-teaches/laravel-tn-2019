@@ -1,3 +1,33 @@
+# Paso a paso para LARAVEL
+
+1. Crear una ruta. Ej:
+```
+Route::get('/movies', 'MoviesController@index');
+```
+
+> Esta ruta viajará por GET. Usará el controlador *MoviesController* y ejecutará el método *index*
+
+2. Crear el controlador. En consola:
+```
+php artisan make:controller MoviesController --resource
+```
+
+> El helper *--resource* crea un controlador con toda la plantilla de métodos más comunes que vamos a usar. Recomendación, los controladores va en plural con la palabra "Controller".
+
+3. Crear el modelo (si es necesario). En consola
+```
+php artisan make:model Movie
+```
+
+> El modelo SIEMPRE se nombre en singular y la inicial va en mayúscula.
+
+---
+
+## Varios
+
+... loading
+
+
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
 <p align="center">

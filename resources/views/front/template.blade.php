@@ -6,11 +6,12 @@
 		<link rel="stylesheet" href="/css/app.css">
 	</head>
 	<body>
-
 		@include('front.navbar')
 
-		@yield('mainContent')
-		
+		<div class="container">
+			@yield('mainContent')
+		</div>
+
 		@yield('secondContent')
 	</body>
 </html>

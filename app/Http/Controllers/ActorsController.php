@@ -87,4 +87,16 @@ class ActorsController extends Controller
     {
         //
     }
+
+		public function search()
+		{
+			return view('front.Actor.search');
+		}
+
+		public function result(Request $request)
+		{
+			$actors = Actor::where('first_name', 'LIKE', '%' . $request->word . '%')->get();
+
+			return view('front.Actor.result', compact('actors'));
+		}
 }
