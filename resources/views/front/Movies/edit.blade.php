@@ -1,9 +1,10 @@
 @extends('front.template')
 
-@section('pageTitle', 'Crear una película')
+@section('pageTitle', 'Editando una película')
 
 @section('mainContent')
-	<h2>Formulario para crear películas</h2>
+	<h2>Formulario para editar la película: {{ $movieToEdit->title }}</h2>
+
 	{{-- Errores si los hubiera --}}
 	@if (count($errors))
 		<ul>
@@ -13,8 +14,9 @@
 		</ul>
 	@endif
 
-	<form action="/movies" method="post">
+	<form action="/movies/{{ $movieToEdit->id }}" method="post">
 		@csrf
+		{{ method_field('put') }}
 		<div class="row">
 			<div class="col-6">
 				<div class="form-group">
@@ -22,7 +24,7 @@
 					<input
 						type="text"
 						name="title"
-						value="{{ $errors->has('title') ? null : old('title') }}"
+						value="{{ old('title', $movieToEdit->title) }}"
 						class="form-control"
 					>
 					@if ($errors->has('title'))
@@ -39,7 +41,7 @@
 					<input
 						type="text"
 						name="rating"
-						value="{{ old('rating') }}"
+						value="{{ old('rating', $movieToEdit->rating) }}"
 						class="form-control"
 					>
 					@if ($errors->has('rating'))
@@ -56,7 +58,7 @@
 					<input
 						type="text"
 						name="awards"
-						value="{{ old('awards') }}"
+						value="{{ old('awards', $movieToEdit->awards) }}"
 						class="form-control"
 					>
 					@if ($errors->has('awards'))
@@ -73,7 +75,7 @@
 					<input
 						type="date"
 						name="release_date"
-						value="{{ old('release_date') }}"
+						value="{{ old('release_date', $movieToEdit->release_date->format('Y-m-d')) }}"
 						class="form-control"
 					>
 					@if ($errors->has('release_date'))
@@ -90,7 +92,7 @@
 					<input
 						type="text"
 						name="length"
-						value="{{ old('length') }}"
+						value="{{ old('length', $movieToEdit->length) }}"
 						class="form-control"
 					>
 					@if ($errors->has('length'))
@@ -106,7 +108,10 @@
 					<label>Genre</label>
 					<select class="form-control" name="genre_id">
 						@foreach ($genres as $genre)
-							<option value="{{ $genre->id }}">{{ $genre->name }}</option>
+							<option
+								value="{{ $genre->id }}"
+								{{ $genre->id === $movieToEdit->genre_id ? 'selected' : null }}
+							>{{ $genre->name }}</option>
 						@endforeach
 					</select>
 					@if ($errors->has('genre_id'))
