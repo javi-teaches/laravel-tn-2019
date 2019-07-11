@@ -26,7 +26,7 @@ Route::get('/admin', function () {
 /*
 	Rutas Recurso Movies
 */
-Route::get('/movies', 'MoviesController@index'); // Index para películas
+Route::get('/movies/', 'MoviesController@index'); // Index para películas
 Route::post('/movies', 'MoviesController@store'); // Guardar en DB
 Route::get('/movies/create', 'MoviesController@create'); // Formulario para crear
 Route::get('/movies/{id}', 'MoviesController@show'); // Muestra UNA película

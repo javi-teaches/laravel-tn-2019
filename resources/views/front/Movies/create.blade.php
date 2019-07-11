@@ -13,7 +13,7 @@
 		</ul>
 	@endif
 
-	<form action="/movies" method="post">
+	<form action="/movies" method="post" enctype="multipart/form-data">
 		@csrf
 		<div class="row">
 			<div class="col-6">
@@ -112,6 +112,18 @@
 					@if ($errors->has('genre_id'))
 						<span class="text-danger">
 							{{ $errors->first('genre_id') }}
+						</span>
+					@endif
+				</div>
+			</div>
+
+			<div class="col-6">
+				<div class="form-group">
+					<label>Subí una imagen</label>
+					<input type="file" name="poster" class="form-control">
+					@if ($errors->has('poster'))
+						<span class="text-danger">
+							{{ $errors->first('poster') }}
 						</span>
 					@endif
 				</div>

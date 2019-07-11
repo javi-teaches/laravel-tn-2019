@@ -47,9 +47,11 @@ class MoviesController extends Controller
 
 	public function index()
 	{
-		$movies = Movie::all();
+		// $movies = Movie::all();
+		$movies = Movie::paginate(5);
+		$totalMovies = count(Movie::all());
 
-		return view('front/Movies/index', compact('movies'));
+		return view('front/Movies/index', compact('movies', 'totalMovies'));
 	}
 
 	public function show($id)
@@ -79,6 +81,7 @@ class MoviesController extends Controller
 			'release_date' => 'required',
 			'length' => 'required | numeric',
 			'genre_id' => 'required',
+			'poster' => 'required | image'
 		], [
 			// input_name.rule => message
 			// 'title.required' => 'El campo título es obligatorio',
@@ -98,7 +101,33 @@ class MoviesController extends Controller
 		// 	'release_date' => $request->input('release_date'),
 		// ]);
 
-		Movie::create($request->except('_token'));
+		// Guardo la película en DB y dejo en una variable $movie
+		// $movie = Movie::create($request->except('_token'));
+		$movie = new Movie; // Objeto de tipo Movie Vacio
+
+		// Asocio atributos con valores
+		$movie->title = $request->input('title');
+		$movie->rating = $request->input('rating');
+		$movie->awards = $request->input('awards');
+		$movie->release_date = $request->input('release_date');
+		$movie->length = $request->input('length');
+		$movie->genre_id = $request->input('genre_id');
+
+		// Obtengo el archivo que viene en el formulario (Objeto de Laravel) que tiene a su vez el archivo de la imagen
+		$imagen = $request->files(); // El value del atributo name del input file
+
+		if ($imagen) {
+			// Armo un nombre único para este archivo
+			$imagenFinal = uniqid("img_") . "." . $imagen->extension();
+
+			// Subo el archivo en la carpeta elegida
+			$imagen->storePubliclyAs("public/posters", $imagenFinal);
+
+			// Le asigno la imagen a la película que guardamos
+			$movie->poster = $imagenFinal;
+		}
+
+		$movie->save();
 
 		// 3. Redireccionamos SIEMPRE a una RUTA
 		return redirect('/movies');
@@ -137,6 +166,20 @@ class MoviesController extends Controller
 		$movieToUpdate->release_date = $request->input('release_date');
 		$movieToUpdate->length = $request->input('length');
 		$movieToUpdate->genre_id = $request->input('genre_id');
+
+		// Obtengo el archivo que viene en el formulario (Objeto de Laravel) que tiene a su vez el archivo de la imagen
+		$imagen = $request->files(); // El value del atributo name del input file
+
+		if ($imagen) {
+			// Armo un nombre único para este archivo.
+			$imagenFinal = uniqid("img_") . "." . $imagen->extension();
+
+			// Subo el archivo en la carpeta elegida
+			$imagen->storePubliclyAs("public/posters", $imagenFinal);
+
+			// Le asigno la imagen a la película que guardamos
+			$movieToUpdate->poster = $imagenFinal;
+		}
 
 		$movieToUpdate->save();
 

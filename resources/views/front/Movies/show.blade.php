@@ -3,6 +3,7 @@
 @section('pageTitle', 'Detalle de la película')
 
 @section('mainContent')
+	<img src="/storage/posters/{{ $movie->poster }}" width="50%">
 	<h2>Detalle de: {{ $movie->title }}</h2>
 	<p>Rating: {{ $movie->rating }}</p>
 	<p>Length: {{ $movie->length }}</p>
@@ -10,7 +11,7 @@
 	<p>Genre: {{ $movie->genre->name }}</p>
 
 	<p>Actores en esta película</p>
-	<ul>		
+	<ul>
 		@foreach ($movie->actors as $actor)
 			<li>{{ $actor->getFullName() }}</li>
 		@endforeach
