@@ -4,6 +4,11 @@
 
 @section('mainContent')
 	<h2>Listado de películas</h2>
+
+	@auth
+		<h2>Hola {{ Auth::user()->name }}</h2>
+	@endauth
+
 	<p>En nuestra base de datos hay un total de {{ $totalMovies }} películas.</p>
 	<a href="/movies/create" class="btn btn-success">crear película</a>
 

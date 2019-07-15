@@ -12,6 +12,8 @@
 			@yield('mainContent')
 		</div>
 
+		@include('front.footer')
+
 		@yield('secondContent')
 	</body>
 </html>

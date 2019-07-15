@@ -17,10 +17,13 @@
 		@endforeach
 	</ul>
 
-	<form action="/movies/{{ $movie->id }}" method="post">
-		@csrf
-		{{ method_field('delete') }}
-		<a href="/movies/{{ $movie->id }}/edit" class="btn btn-info">Editar Película</a>
-		<button type="submit" class="btn btn-danger">BORRAR</button>
-	</form>
+	@auth
+		<form action="/movies/{{ $movie->id }}" method="post">
+			@csrf
+			{{ method_field('delete') }}
+			<a href="/movies/{{ $movie->id }}/edit" class="btn btn-info">Editar Película</a>
+			<button type="submit" class="btn btn-danger">BORRAR</button>
+		</form>
+	@endauth
+
 @endsection

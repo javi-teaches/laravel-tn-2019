@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/profile';
 
     /**
      * Create a new controller instance.
@@ -49,10 +49,15 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => 'required | string | max:255',
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+            'country' => ['required', 'string', 'max:255'],
+            'avatar' => ['required', 'image'],
+            'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/DH/'],
+        ], [
+					'required' => 'El campo :attribute es obligatorio',
+					'password.regex' => 'La contraseña debe tener las letras DH'
+				]);
     }
 
     /**
@@ -63,10 +68,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+			$request = request();
+
+      $profileImage = $request->file('avatar');
+
+			$profileImageName = uniqid('img-') . '.' . $profileImage->extension();
+
+			$profileImage->storePubliclyAs("public/avatars", $profileImageName);
+
+      return User::create([
+          'name' => $data['name'],
+          'email' => $data['email'],
+          'country' => $data['country'],
+          'avatar' => $profileImageName,
+          'password' => Hash::make($data['password']),
+      ]);
     }
 }

@@ -84,7 +84,7 @@ class MoviesController extends Controller
 			'poster' => 'required | image'
 		], [
 			// input_name.rule => message
-			// 'title.required' => 'El campo título es obligatorio',
+			'title.required' => 'El campo título es obligatorio',
 			// 'rating.required' => 'El campo rating es obligatorio',
 			'required' => 'El campo :attribute es obligatorio',
 			'numeric' => 'El campo :attribute debe ser numérico',
@@ -114,7 +114,7 @@ class MoviesController extends Controller
 		$movie->genre_id = $request->input('genre_id');
 
 		// Obtengo el archivo que viene en el formulario (Objeto de Laravel) que tiene a su vez el archivo de la imagen
-		$imagen = $request->files(); // El value del atributo name del input file
+		$imagen = $request->file('poster'); // El value del atributo name del input file
 
 		if ($imagen) {
 			// Armo un nombre único para este archivo
@@ -168,7 +168,7 @@ class MoviesController extends Controller
 		$movieToUpdate->genre_id = $request->input('genre_id');
 
 		// Obtengo el archivo que viene en el formulario (Objeto de Laravel) que tiene a su vez el archivo de la imagen
-		$imagen = $request->files(); // El value del atributo name del input file
+		$imagen = $request->file('poster'); // El value del atributo name del input file
 
 		if ($imagen) {
 			// Armo un nombre único para este archivo.

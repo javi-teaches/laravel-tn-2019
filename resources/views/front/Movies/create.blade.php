@@ -25,11 +25,12 @@
 						value="{{ $errors->has('title') ? null : old('title') }}"
 						class="form-control"
 					>
-					@if ($errors->has('title'))
+
+					@error('title')
 						<span class="text-danger">
-							{{ $errors->first('title') }}
+							{{ $message }}
 						</span>
-					@endif
+					@enderror
 				</div>
 			</div>
 

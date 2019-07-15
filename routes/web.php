@@ -14,6 +14,9 @@ use App\Actor;
 |
 */
 
+/* Rutas de Registro y Login */
+Auth::routes();
+
 /*
 	Start - Rutas de prueba
 */
@@ -26,13 +29,26 @@ Route::get('/admin', function () {
 /*
 	Rutas Recurso Movies
 */
-Route::get('/movies/', 'MoviesController@index'); // Index para películas
-Route::post('/movies', 'MoviesController@store'); // Guardar en DB
-Route::get('/movies/create', 'MoviesController@create'); // Formulario para crear
-Route::get('/movies/{id}', 'MoviesController@show'); // Muestra UNA película
-Route::put('/movies/{id}', 'MoviesController@update'); // Ruta para actualizar una película
-Route::delete('/movies/{id}', 'MoviesController@destroy'); // Ruta para borrar una película
-Route::get('/movies/{id}/edit', 'MoviesController@edit'); // Formulario para editar
+// Route::get('/movies/', 'MoviesController@index'); // Index para películas
+//
+// Route::post('/movies', 'MoviesController@store'); // Guardar en DB
+// Route::get('/movies/create', 'MoviesController@create')->middleware('auth'); // Formulario para crear
+//
+// Route::get('/movies/{id}', 'MoviesController@show'); // Muestra UNA película
+// Route::put('/movies/{id}', 'MoviesController@update'); // Ruta para actualizar una película
+// Route::delete('/movies/{id}', 'MoviesController@destroy'); // Ruta para borrar una película
+// Route::get('/movies/{id}/edit', 'MoviesController@edit'); // Formulario para editar
+
+Route::middleware('auth')->group(function ()
+{
+	Route::get('/movies/create', 'MoviesController@create');
+	Route::delete('/movies/{id}', 'MoviesController@destroy');
+	Route::get('/movies/{id}/edit', 'MoviesController@edit');
+});
+
+Route::resource('/movies', 'MoviesController')->except(['create', 'destroy', 'edit']);
+
+
 
 /*
 	Rutas Recurso Actors
@@ -54,3 +70,15 @@ Route::get('/genres', function ()
 		echo "$movie->title <br>";
 	}
 });
+
+Route::get('/home', 'HomeController@index');
+
+
+Route::get('/profile', function () {
+	if (Auth::user()) {
+		echo "Hola " . Auth::user()->name . "<br>";
+		echo "<img src='/storage/avatars/" . Auth::user()->avatar . "' width='100' /><br>";
+	} else {
+		return redirect('/register');
+	}
+})->name('profile');
