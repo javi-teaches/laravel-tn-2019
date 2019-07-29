@@ -24,7 +24,11 @@
 						name="title"
 						value="{{ $errors->has('title') ? null : old('title') }}"
 						class="form-control"
+						data-nombre='Título'
 					>
+					<div class="invalid-feedback">
+						Aquí va el error del Título
+					</div>
 
 					@error('title')
 						<span class="text-danger">
@@ -42,7 +46,11 @@
 						name="rating"
 						value="{{ old('rating') }}"
 						class="form-control"
+						data-nombre='Valoración'
 					>
+					<div class="invalid-feedback">
+						Aquí va el error del Rating
+					</div>
 					@if ($errors->has('rating'))
 						<span class="text-danger">
 							{{ $errors->first('rating') }}
@@ -59,7 +67,11 @@
 						name="awards"
 						value="{{ old('awards') }}"
 						class="form-control"
+						data-nombre='Premios'
 					>
+					<div class="invalid-feedback">
+						Aquí va el error del Awards
+					</div>
 					@if ($errors->has('awards'))
 						<span class="text-danger">
 							{{ $errors->first('awards') }}
@@ -76,7 +88,11 @@
 						name="release_date"
 						value="{{ old('release_date') }}"
 						class="form-control"
+						data-nombre='Fecha de estreno'
 					>
+					<div class="invalid-feedback">
+						Aquí va el error del release_date
+					</div>
 					@if ($errors->has('release_date'))
 						<span class="text-danger">
 							{{ $errors->first('release_date') }}
@@ -93,7 +109,11 @@
 						name="length"
 						value="{{ old('length') }}"
 						class="form-control"
+						data-nombre='Duración'
 					>
+					<div class="invalid-feedback">
+						Aquí va el error del length
+					</div>
 					@if ($errors->has('length'))
 						<span class="text-danger">
 							{{ $errors->first('length') }}
@@ -105,11 +125,15 @@
 			<div class="col-6">
 				<div class="form-group">
 					<label>Genre</label>
-					<select class="form-control" name="genre_id">
+					<select class="form-control" name="genre_id" data-nombre='Género'>
+						<option value="">Elegí una opción</option>
 						@foreach ($genres as $genre)
 							<option value="{{ $genre->id }}">{{ $genre->name }}</option>
 						@endforeach
 					</select>
+					<div class="invalid-feedback">
+						Aquí va el error del genre_id
+					</div>
 					@if ($errors->has('genre_id'))
 						<span class="text-danger">
 							{{ $errors->first('genre_id') }}
@@ -121,7 +145,10 @@
 			<div class="col-6">
 				<div class="form-group">
 					<label>Subí una imagen</label>
-					<input type="file" name="poster" class="form-control">
+					<input type="file" name="poster" class="form-control" data-nombre='Imagen'>
+					<div class="invalid-feedback">
+						Aquí va el error del poster
+					</div>
 					@if ($errors->has('poster'))
 						<span class="text-danger">
 							{{ $errors->first('poster') }}
@@ -135,6 +162,8 @@
 			</div>
 		</div>
 	</form>
+
+	<script src="/js/validateMoviesCreate.js"></script>
 
 	<br>
 	<br>
