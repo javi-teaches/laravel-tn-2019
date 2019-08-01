@@ -43,9 +43,35 @@
                             <label for="country" class="col-md-4 col-form-label text-md-right">País</label>
 
                             <div class="col-md-6">
-                                <input id="country" type="text" class="form-control @error('country') is-invalid @enderror" name="country" value="{{ old('country') }}" autocomplete="country">
+															<select
+																class="form-control @error('country') is-invalid @enderror"
+																name="country"
+																id="country"
+															>
+																<option value="">Elegí un país</option>
+															</select>
 
                                 @error('country')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+												<div class="form-group row" style="display: none;">
+                            <label for="country" class="col-md-4 col-form-label text-md-right">Provincia:</label>
+
+                            <div class="col-md-6">
+															<select
+																class="form-control @error('provincia') is-invalid @enderror"
+																name="city"
+																id="city"
+															>
+																<option value="">Elegí una provincia</option>
+															</select>
+
+                                @error('provincia')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -89,6 +115,8 @@
                             </div>
                         </div>
 
+
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
@@ -102,4 +130,6 @@
         </div>
     </div>
 </div>
+
+<script src="/js/fetch.js"></script>
 @endsection

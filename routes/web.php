@@ -73,7 +73,6 @@ Route::get('/genres', function ()
 
 Route::get('/home', 'HomeController@index');
 
-
 Route::get('/profile', function () {
 	if (Auth::user()) {
 		echo "Hola " . Auth::user()->name . "<br>";
@@ -82,3 +81,16 @@ Route::get('/profile', function () {
 		return redirect('/register');
 	}
 })->name('profile');
+
+
+Route::get('/api/movies', function () {
+	return Movie::select('title', 'rating', 'poster')->get();
+});
+
+Route::get('/api/movies/{id}', function ($id) {
+	return Movie::select('title', 'rating', 'poster')->where('id', $id)->get();
+});
+
+Route::get('api/users', function () {
+	return \App\User::select('email', 'password')->get();
+});
