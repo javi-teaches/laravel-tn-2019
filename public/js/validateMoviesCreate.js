@@ -63,20 +63,57 @@ formInputs.forEach(function (oneInput) {
 					errorsObj[this.name] = true;
 				}
 			}
+
+			// if (this.name === 'poster') {
+			// 	this.addEventListener('change', function () {
+			// 		console.log('cambiaste chabaaaaan');
+			// 	});
+			// 	// console.log(this);
+			// 	// var ext = this.value.split('.').pop();
+			// 	// console.log(ext);
+			// 	// if (ext !== 'jpg' && ext !== 'jpeg' && ext !== 'png') {
+			// 	// 	this.classList.add('is-invalid');
+			// 	// 	this.nextElementSibling.innerHTML = 'Formato inválido. Los formatos soportados son jpg, jpeg y png';
+			// 	// 	// Si un campo tiene error, creamos una key con el nombre del campo y valor true
+			// 	// 	errorsObj[this.name] = true;
+			// 	// }
+			// }
 		}
 	});
 
-	// oneInput.addEventListener('focus', function () {
-	// 	var inputName = this.name;
-	// 	switch (inputName) {
-	// 		case 'title':
-	// 			console.log('Título de la película inferior a 15 letras');
-	// 			break;
-	// 		case 'rating':
-	// 			console.log('Solamente números');
-	// 			break;
-	// 	};
-	// });
+	/*
+		Validamos el campo poster para verificar la extensión
+			- Lo hacemos fuera del evento blur
+			- Esta validación se dispara cuando el campo cambia de valor, cuando se ha seleccionado un archivo
+	*/
+	if (oneInput.name === 'poster') {
+		oneInput.addEventListener('change', function () {
+			// sacamos la extensión del archivo
+			var fileExtension = this.value.split('.').pop();
+			// Array de estensiones permitidas
+			var acceptedExtensions = ['jpg', 'jpeg', 'png'];
+			/*
+				Buscamos la extensión del archivo actual en nuestro array de extensiones permitidas
+				Si no se encuentra la extensión dentro de nuestro array retorna undefined
+			*/
+			var extensionIsOk = acceptedExtensions.find(function (ext) {
+				return ext === fileExtension;
+			});
+
+			// Validamos la extensión
+			if (extensionIsOk === undefined) {
+				// Si la extensión no es ninguna de la permitida
+				this.classList.add('is-invalid');
+				this.nextElementSibling.innerHTML = 'Formato inválido. Los formatos soportados son jpg, jpeg y png';
+				// Si un campo tiene error, creamos una key con el nombre del campo y valor true
+				errorsObj[this.name] = true;
+			} else {
+				this.classList.remove('is-invalid');
+				this.classList.add('is-valid');
+				this.nextElementSibling.innerHTML = '';
+			}
+		});
+	}
 });
 
 // Si tratan de enviar el formulario
